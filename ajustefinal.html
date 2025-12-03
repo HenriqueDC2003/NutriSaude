@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriSaúde Consciente | Projeto Integrador I</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================================== */
+        /* 1. CONFIGURAÇÕES GERAIS (CSS)        */
+        /* ==================================== */
+        :root {
+            --primary-color: #2E7D32; /* Verde Floresta */
+            --primary-light: #4CAF50; 
+            --accent-color: #A5D6A7; 
+            --text-dark: #2c3e50;
+            --text-gray: #546e7a;
+            --text-light: #ffffff;
+            --bg-body: #f4f6f5;
+            --bg-card: #ffffff;
+            --font-header: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            /* Cores Temáticas */
+            --col-lactose: #4FC3F7;
+            --col-gluten: #FFB74D;
+            --col-acucar: #F06292;
+            --col-saudavel: #81C784;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--bg-body);
+            /* Padrão de fundo sutil */
+            background-image: radial-gradient(#2E7D32 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+
+        a { text-decoration: none; transition: all 0.3s ease; }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 40px 0; }
+
+        /* NAVBAR (Menu Fixo com Efeito Vidro) */
+        .navbar {
+            background: rgba(46, 125, 50, 0.98);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1200px; margin: 0 auto; }
+        .logo a { font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 10px; }
+        .nav-links a { color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 0.9rem; padding: 8px 16px; border-radius: 30px; transition: 0.3s; }
+        .nav-links a:hover { background-color: rgba(255, 255, 255, 0.2); color: #fff; }
+
+        /* HEADER (Capa) */
+        .main-header {
+            background: linear-gradient(rgba(20, 40, 20, 0.7), rgba(20, 40, 20, 0.6)), url('https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover fixed;
+            color: var(--text-light);
+            text-align: center;
+            padding: 80px 20px 100px;
+        }
+        .main-header h1 { font-family: var(--font-header); font-size: 3.2rem; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .main-header > p { font-size: 1.2rem; font-weight: 300; max-width: 700px; margin: 0 auto 50px; opacity: 0.95; }
+
+        /* CARTÃO ACADÊMICO (Vidro) */
+        .academic-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: left;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .academic-row { display: flex; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 12px; align-items: baseline; }
+        .academic-row:last-child { border-bottom: none; padding-bottom: 0; flex-direction: column; }
+        .academic-label { color: var(--accent-color); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; min-width: 140px; }
+        .academic-value { color: #fff; font-weight: 500; font-size: 1.1rem; font-family: var(--font-header); }
+        .student-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; width: 100%; }
+        .student-name { background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #fff; }
+
+        /* GUIA DE SAÚDE */
+        .section-title { font-family: var(--font-header); font-size: 2.5rem; text-align: center; margin: 60px 0 50px; color: var(--primary-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-light); margin: 15px auto 0; border-radius: 2px; opacity: 0.6; }
+        
+        .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        
+        .info-card { 
+            background: var(--bg-card); 
+            padding: 35px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            border: 1px solid rgba(0,0,0,0.03); 
+            transition: transform 0.3s ease; 
+        }
+        .info-card:hover { transform: translateY(-5px); }
+        .info-card h2 { font-family: var(--font-header); font-size: 1.8rem; color: var(--primary-color); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;}
+        .info-card h3 { font-size: 1.2rem; color: var(--text-dark); margin-top: 20px; margin-bottom: 10px; font-weight: 600; border-bottom: 2px solid #f0f4f0; padding-bottom: 5px; }
+        .info-card p, .info-card ul { font-size: 1rem; color: var(--text-gray); margin-bottom: 15px; }
+        .info-card ul { padding-left: 20px; }
+        .info-icon { float: right; margin: 0 0 20px 40px; font-size: 3.5rem; }
+
+        /* BARRA DE PESQUISA */
+        .search-container { max-width: 600px; margin: 0 auto 50px; position: relative; }
+        #search-input { width: 100%; padding: 15px 25px; font-size: 1.1rem; border-radius: 50px; border: 2px solid var(--primary-light); outline: none; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        #search-input:focus { border-color: var(--primary-color); box-shadow: 0 5px 20px rgba(46, 125, 50, 0.2); }
+
+        /* GUIA DE CHÁS */
+        .tea-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .tea-card { background: #fff; border-radius: 20px; padding: 25px; text-align: center; border: 1px solid #e0e0e0; box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: transform 0.3s; position: relative; overflow: hidden; }
+        .tea-card:hover { transform: translateY(-8px); border-color: var(--primary-light); }
+        .tea-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--primary-color); }
+        .tea-icon { font-size: 4rem; margin-bottom: 15px; display: inline-block; filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1)); }
+        .tea-card h3 { font-family: var(--font-header); color: var(--primary-color); margin-bottom: 10px; font-size: 1.4rem; }
+        .tea-card p { font-size: 0.95rem; color: #555; line-height: 1.5; }
+
+        /* CARTÕES ESPECIAIS (Download, SUS, Diagnóstico) */
+        .download-card {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: none;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .sus-card {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-left: 5px solid #1976D2;
+        }
+        .diagnosis-card {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border-left: 5px solid #FFC107;
+        }
+        .download-btn {
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+            transition: transform 0.2s;
+        }
+        .download-btn.sus-btn {
+            background-color: #1976D2;
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+        }
+        .download-btn:hover { transform: scale(1.05); color: white; }
+
+        /* TABELA DE REFERÊNCIA IMC */
+        .imc-reference-table {
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+        .imc-reference-table th, .imc-reference-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .imc-reference-table th { background-color: var(--primary-light); color: white; }
+
+        /* RECEITAS E CARDS */
+        .category-header { margin: 60px 0 30px; border-left: 6px solid #ccc; padding-left: 20px; }
+        .category-title { font-family: var(--font-header); font-size: 2rem; margin: 0; color: #333; }
+        .lista-receitas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        
+        .card-receita { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; display: flex; flex-direction: column; border: 1px solid #f0f0f0; }
+        .card-receita:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+
+        .receita-gravura { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; background: #fafafa; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .receita-gravura svg { width: 100px; height: 100px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); animation: float 3s ease-in-out infinite; }
+
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-content h4 { font-family: var(--font-header); font-size: 1.2rem; margin-bottom: 15px; color: var(--text-dark); font-weight: 700; line-height: 1.3; }
+        .btn-receita { display: block; width: 100%; text-align: center; background: #f5f5f5; color: #555; padding: 10px 0; border-radius: 8px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; }
+        .btn-receita:hover { background: var(--primary-color); color: white; }
+        .selo { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); color: #333; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+        .modal-content { background-color: white; margin: 5% auto; border-radius: 16px; width: 95%; max-width: 700px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); animation: slideDown 0.4s ease; overflow: hidden; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header-bg { background: #f9f9f9; padding: 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: flex-start; }
+        .modal-header-bg h2 { font-family: var(--font-header); font-size: 1.8rem; color: var(--primary-color); margin: 0; max-width: 85%; }
+        .close-btn { font-size: 2rem; color: #999; cursor: pointer; line-height: 1; }
+        .close-btn:hover { color: var(--primary-color); }
+        .modal-actions { display: flex; gap: 10px; margin-top: 10px; }
+        .action-btn { background: white; border: 1px solid #ddd; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .action-btn:hover { background: #f0f0f0; border-color: #bbb; }
+        .modal-body { padding: 30px; }
+        .modal-body h3 { color: var(--primary-light); font-weight: bold; margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        .modal-body ul, .modal-body ol { margin-left: 20px; margin-bottom: 20px; color: #555; }
+        .modal-body li { margin-bottom: 8px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .modal-content, .modal-content * { visibility: visible; }
+            .modal-content { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; margin: 0; padding: 20px; }
+            .modal-actions, .close-btn { display: none; }
+        }
+
+        /* FOOTER */
+        footer { background-color: var(--primary-color); color: rgba(255,255,255,0.8); text-align: center; padding: 40px 0; margin-top: 80px; }
+        
+        @media (max-width: 900px) {
+            .nav-content { flex-direction: column; }
+            .nav-links { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
+            .student-list { grid-template-columns: 1fr; }
+            .health-grid { grid-template-columns: 1fr; }
+            .tea-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo"><a href="#topo">NutriSaúde</a></div>
+            <div class="nav-links">
+                <a href="#guia">Guia de Saúde</a>
+                <a href="#alimentacao">Alimentação</a>
+                <a href="#sus">SUS</a>
+                <a href="#calculadora-imc">IMC</a>
+                <a href="#receitas">Receitas</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="topo" class="main-header">
+        <h1>NUTRIÇÃO QUE TRANSFORMA E INFORMA</h1>
+        <p>Acervo de informações acadêmicas sobre saúde e 40 receitas acessíveis para um estilo de vida mais saudável.</p>
+        
+        <div class="academic-card">
+            <div class="academic-row">
+                <span class="academic-label">Instituição:</span>
+                <span class="academic-value">Nutrição, Universidade Unilasalle</span>
+            </div>
+
+            <div class="academic-row">
+                <span class="academic-label">Disciplina:</span>
+                <span class="academic-value">Projeto Integrador I: Atuação do Nutricionista</span>
+            </div>
+            <div class="academic-row">
+                <span class="academic-label">Professor:</span>
+                <span class="academic-value">Francisco Stefani Amaro</span>
+            </div>
+            <div class="academic-row">
+                <span class="academic-label">Alunas:</span>
+                <div class="student-list">
+                    <div class="student-name">Amanda dos Santos Silva</div>
+                    <div class="student-name">Carla Aires da Silva</div>
+                    <div class="student-name">Júlia Fernandes Zanette</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <h1 class="section-title">Guia de Saúde</h1>
+        
+        <section id="guia" class="health-grid">
+            <article class="info-card">
+                <h2>❤️‍🩹 Hipertensão</h2>
+                <p>Pressão alta (≥ 14x9) sobrecarrega o coração.</p>
+                <h3>Fatores de Risco</h3>
+                <ul><li>Obesidade, Estresse, Sal, Álcool.</li></ul>
+            </article>
+
+            <article class="info-card">
+                <h2>🩸 Diabetes</h2>
+                <p>Insuficiência de insulina ou resistência a ela.</p>
+                <h3>Tipos</h3>
+                <ul><li>Tipo 1 (Autoimune), Tipo 2 (Estilo de vida).</li></ul>
+            </article>
+
+            <article class="info-card" style="border-left: 5px solid #03A9F4;">
+                <h2>💧 Importância da Água</h2>
+                <span class="info-icon" role="img">💧</span>
+                <p>A água regula a temperatura e filtra toxinas.</p>
+                <h3>Recomendação</h3>
+                <p><strong>35ml por kg de peso</strong>. (Ex: 60kg = 2,1L).</p>
+            </article>
+
+            <article class="info-card" style="border-left: 5px solid #4CAF50;">
+                <h2>🏃 Atividade Física</h2>
+                <span class="info-icon" role="img">🏃</span>
+                <p>Fundamental para o corpo e mente.</p>
+                <h3>Recomendação (OMS)</h3>
+                <p>150 a 300 min/semana (30-60 min/dia).</p>
+            </article>
+
+            <article class="info-card" style="border-left: 5px solid #673AB7;">
+                <h2>😴 Higiene do Sono</h2>
+                <span class="info-icon" role="img">😴</span>
+                <p>Dormir bem recupera o corpo e regula hormônios.</p>
+                <h3>Recomendação</h3>
+                <p>Adultos: <strong>7 a 9 horas</strong> por noite.</p>
+            </article>
+
+            <article class="info-card">
+                <h2>🥑 Colesterol</h2>
+                <p>Essencial, mas perigoso em excesso.</p>
+                <ul><li>LDL (Mau) x HDL (Bom).</li></ul>
+            </article>
+        </section>
+
+        <section id="pos-diagnostico" style="margin-bottom: 60px;">
+            <article class="info-card diagnosis-card">
+                <h2 style="color: #F57F17; border-bottom: 2px solid #FBC02D; padding-bottom: 10px;">📋 Recebi um Diagnóstico. E agora?</h2>
+                <p>Receber a notícia de que você tem hipertensão, diabetes ou intolerância pode assustar, mas <strong>não entre em pânico</strong>. Siga estes passos iniciais:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 25px;">
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 10px; text-align: center;">
+                        <span style="font-size: 2rem;">🧘</span>
+                        <h4 style="color: #333; margin: 10px 0;">1. Mantenha a Calma</h4>
+                        <p style="font-size: 0.9rem;">O diagnóstico é o primeiro passo para o controle.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 10px; text-align: center;">
+                        <span style="font-size: 2rem;">💊</span>
+                        <h4 style="color: #333; margin: 10px 0;">2. Tratamento</h4>
+                        <p style="font-size: 0.9rem;">Nunca pare a medicação por conta própria.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 10px; text-align: center;">
+                        <span style="font-size: 2rem;">🥗</span>
+                        <h4 style="color: #333; margin: 10px 0;">3. Alimentação</h4>
+                        <p style="font-size: 0.9rem;">Pequenas trocas no prato fazem milagres.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 10px; text-align: center;">
+                        <span style="font-size: 2rem;">🤝</span>
+                        <h4 style="color: #333; margin: 10px 0;">4. Busque Apoio</h4>
+                        <p style="font-size: 0.9rem;">O <strong>Nutricionista no SUS</strong> pode te guiar gratuitamente.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <h1 class="section-title" id="alimentacao">Começando a Comer Melhor</h1>
+        
+        <section class="health-grid">
+            <article class="info-card" style="grid-column: 1 / -1; border-left: 5px solid #FFC107;">
+                <h2>🥗 Por onde eu começo?</h2>
+                <p>O <strong>Guia Alimentar para a População Brasileira</strong> simplifica isso com uma "Regra de Ouro":</p>
+                <p style="font-size: 1.2rem; font-style: italic; color: #555; text-align: center; margin: 20px;">"Prefira sempre alimentos in natura ou minimamente processados e preparações culinárias a alimentos ultraprocessados."</p>
+                <p>Isso significa: descasque mais e desembale menos! Coma comida de verdade (arroz, feijão, legumes, frutas).</p>
+            </article>
+
+            <article class="info-card" style="grid-column: 1 / -1; border-left: 5px solid #E91E63;">
+                <h2>👩‍⚕️ O que faz um Nutricionista?</h2>
+                <p>O nutricionista é o profissional capacitado para prevenir e tratar doenças, melhorar a performance esportiva e realizar a educação alimentar, sempre respeitando a realidade, cultura e o bolso do paciente.</p>
+            </article>
+
+            <div class="tea-card">
+                <span class="tea-icon">☕</span>
+                <h3>Café da Manhã</h3>
+                <p>Raízes (mandioca, batata doce), cuscuz, frutas, leite, café e pão francês (com moderação).</p>
+            </div>
+
+            <div class="tea-card">
+                <span class="tea-icon">🍛</span>
+                <h3>Almoço Brasileiro</h3>
+                <p>O prato perfeito: Arroz + Feijão + Carne/Ovo + Legumes/Verduras.</p>
+            </div>
+
+            <div class="tea-card">
+                <span class="tea-icon">🍎</span>
+                <h3>Lanches</h3>
+                <p>Frutas, iogurte natural, pipoca de panela ou sanduíche natural.</p>
+            </div>
+
+            <div class="info-card download-card">
+                <h3>📖 Saiba mais no Guia Oficial</h3>
+                <p>Material gratuito do Ministério da Saúde.</p>
+                <a href="https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf" target="_blank" class="download-btn">
+                    📥 Baixar Guia Alimentar (PDF)
+                </a>
+            </div>
+        </section>
+
+        <section id="calculadora-imc" style="max-width: 800px; margin: 0 auto 80px;">
+            <div class="info-card" style="text-align: center; border-left: 5px solid #FF9800; background: #fff8e1;">
+                <h2 style="justify-content: center;">⚖️ Calculadora de IMC</h2>
+                
+                <p style="text-align: left; margin-bottom: 15px;"><strong>O que é o IMC?</strong> O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa está no peso ideal. Ele é um indicador geral, mas não avalia a composição corporal (músculos vs gordura).</p>
+
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; text-align: left;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary-color);">Idade</label>
+                        <input type="number" id="imc-idade" placeholder="Ex: 25" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary-color);">Sexo</label>
+                        <select id="imc-sexo" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: white;">
+                            <option value="m">Masculino</option>
+                            <option value="f">Feminino</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary-color);">Peso (kg)</label>
+                        <input type="number" id="imc-peso" placeholder="Ex: 70" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary-color);">Altura (m)</label>
+                        <input type="number" id="imc-altura" placeholder="Ex: 1.75" step="0.01" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+
+                <button onclick="calcularIMC()" style="margin-top: 25px; background-color: var(--primary-color); color: white; border: none; padding: 12px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);">
+                    Calcular Meu IMC
+                </button>
+
+                <div style="margin-top: 30px; text-align: left;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;">📉 Entenda os Resultados (Adultos)</h4>
+                    <table class="imc-reference-table">
+                        <thead>
+                            <tr>
+                                <th>IMC</th>
+                                <th>Classificação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Menor que 18,5</td>
+                                <td>Abaixo do peso</td>
+                            </tr>
+                            <tr>
+                                <td>18,5 a 24,9</td>
+                                <td>Peso normal (Adequado)</td>
+                            </tr>
+                            <tr>
+                                <td>25,0 a 29,9</td>
+                                <td>Sobrepeso</td>
+                            </tr>
+                            <tr>
+                                <td>Maior que 30,0</td>
+                                <td>Obesidade</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">*Fonte: Organização Mundial da Saúde (OMS). Esta tabela é referência para adultos.</p>
+                </div>
+
+                <div id="resultado-imc" style="margin-top: 25px; padding: 20px; border-radius: 12px; background-color: #fff; border: 1px solid #eee; display: none;">
+                    <h3 style="margin: 0; color: var(--primary-color); justify-content: center;">Seu IMC é: <span id="valor-imc" style="font-size: 1.8rem; margin-left: 10px;"></span></h3>
+                    <p id="classificacao-imc" style="font-weight: bold; margin-top: 5px; font-size: 1.1rem;"></p>
+                    <div id="aviso-sus" style="margin-top: 15px; display: none;">
+                        <p style="color: #1976D2; font-style: italic;">💡 Dica: O acompanhamento é essencial. Veja abaixo como encontrar um Nutricionista no SUS!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h1 class="section-title" id="sus">Nutricionista no SUS: Um Direito Seu</h1>
+        
+        <section class="health-grid" style="grid-template-columns: 1fr;">
+            
+            <article class="info-card sus-card">
+                <h2>🏥 Como conseguir atendimento gratuito?</h2>
+                <p>O Nutricionista faz parte da equipe do SUS (NASF). Veja o passo a passo:</p>
+                <ol style="margin-top: 15px; margin-bottom: 20px;">
+                    <li><strong>Vá até a UBS (Posto de Saúde)</strong> mais próxima com seu cartão SUS.</li>
+                    <li><strong>Marque consulta com o Clínico Geral</strong>.</li>
+                    <li><strong>Peça o Encaminhamento:</strong> Relate sua necessidade e peça para passar com o nutricionista.</li>
+                    <li><strong>Agendamento:</strong> A UBS irá agendar seu retorno.</li>
+                </ol>
+            </article>
+
+            <article class="info-card">
+                <h2 style="color: #1976D2;">📍 Onde encontrar em Canoas - RS?</h2>
+                <p>Principais Unidades Básicas de Saúde (UBS):</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 10px;"><strong>UBS Mathias Velho</strong><br>Rua Rio Grande do Sul, 1615</div>
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 10px;"><strong>UBS Niterói</strong><br>Rua Mal. Rondon, 132</div>
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 10px;"><strong>UBS Guajuviras</strong><br>Av. Principal, Quadra Q</div>
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 10px;"><strong>UBS Santa Isabel</strong><br>Rua Frei Orlando, 141</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="https://www.google.com/maps/search/UBS+Canoas+RS" target="_blank" class="download-btn sus-btn">
+                        🗺️ Ver Mapa das UBS em Canoas
+                    </a>
+                </div>
+            </article>
+
+        </section>
+
+        <h1 class="section-title">Guia de Chás Naturais</h1>
+        <section id="chas" class="tea-grid">
+            <div class="tea-card"><span class="tea-icon">🌼</span><h3>Camomila</h3><p>Calmante natural. Melhora o sono.</p></div>
+            <div class="tea-card"><span class="tea-icon">🌿</span><h3>Hortelã</h3><p>Digestivo e descongestionante.</p></div>
+            <div class="tea-card"><span class="tea-icon">🌾</span><h3>Erva-Doce</h3><p>Alivia cólicas e gases.</p></div>
+            <div class="tea-card"><span class="tea-icon">🍃</span><h3>Boldo</h3><p>Amigo do fígado e digestão.</p></div>
+            <div class="tea-card"><span class="tea-icon">🪵</span><h3>Gengibre</h3><p>Anti-inflamatório e termogênico.</p></div>
+        </section>
+
+        <h1 class="section-title">Receitas Incríveis & Econômicas</h1>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="🔍  Pesquisar receita (ex: bolo, banana, frango)...">
+        </div>
+        
+        <div id="receitas">
+            <div class="category-header" style="border-color: var(--col-lactose);">
+                <h2 class="category-title" style="color: var(--col-lactose);">Zero Lactose (Cremosas!)</h2>
+            </div>
+            <div class="lista-receitas-grid" id="receitas-lactose"></div>
+
+            <div class="category-header" style="border-color: var(--col-gluten);">
+                <h2 class="category-title" style="color: var(--col-gluten);">Zero Glúten (Fofinhas!)</h2>
+            </div>
+            <div class="lista-receitas-grid" id="receitas-gluten"></div>
+
+            <div class="category-header" style="border-color: var(--col-acucar);">
+                <h2 class="category-title" style="color: var(--col-acucar);">Zero Açúcar (Docinhas!)</h2>
+            </div>
+            <div class="lista-receitas-grid" id="receitas-acucar"></div>
+
+            <div class="category-header" style="border-color: var(--col-saudavel);">
+                <h2 class="category-title" style="color: var(--col-saudavel);">Saudável & Gostoso</h2>
+            </div>
+            <div class="lista-receitas-grid" id="receitas-saudaveis"></div>
+        </div>
+        
+        <section id="referencias" class="references">
+            <h2>Referências Bibliográficas</h2>
+            <ol>
+                <li>BRASIL. Ministério da Saúde. <strong>Guia Alimentar para a População Brasileira</strong>. 2. ed. Brasília, 2014.</li>
+                <li>Sobre a hipertensão. Disponível em: <a href="https://www.sbh.org.br/sobre-a-hipertensao/" target="_blank">SBH</a>.</li>
+                <li>O que é Diabetes? Disponível em: <a href="https://www.endocrino.org.br/o-que-e-diabetes/" target="_blank">SBEM</a>.</li>
+                <li>ORGANIZAÇÃO MUNDIAL DA SAÚDE (OMS). Diretrizes para atividade física e comportamento sedentário.</li>
+                <li>NATIONAL SLEEP FOUNDATION. Sleep Duration Recommendations.</li>
+                <li>ASSOCIAÇÃO BRASILEIRA DO SONO. Higiene do Sono.</li>
+                <li>PREFEITURA DE CANOAS. Unidades Básicas de Saúde.</li>
+            </ol>
+        </section>
+
+    </main>
+    
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header-bg">
+                <div style="flex-grow: 1;">
+                    <h2 id="modal-title" style="margin-bottom: 5px;">Título</h2>
+                    <div class="modal-actions">
+                        <button class="action-btn" onclick="shareRecipe()">📲 Compartilhar</button>
+                        <button class="action-btn" onclick="window.print()">🖨️ Imprimir</button>
+                    </div>
+                </div>
+                <span class="close-btn">×</span>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 25px;">
+                    <span id="modal-tag" class="selo" style="position: relative; top: 0; right: 0;">TAG</span>
+                </div>
+                <h3>Ingredientes</h3>
+                <ul id="modal-ingredients"></ul>
+                <h3>Modo de Preparo</h3>
+                <ol id="modal-instructions"></ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 NutriSaúde Consciente. Projeto Integrador I. Informação Certificada.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const allRecipes = [];
+            let recipeIdCounter = 0;
+            let currentRecipe = null;
+            
+            const funGraphics = {
+                'LACTOSE FREE': {
+                    color: '#E1F5FE', 
+                    svg: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 60 L90 60 L90 85 Q90 95 80 95 L20 95 Q10 95 10 85 Z" fill="#FFCA28"/><path d="M10 60 L50 20 L90 60" fill="#FFE082"/><circle cx="30" cy="75" r="6" fill="#FFB300"/><circle cx="75" cy="80" r="4" fill="#FFB300"/><circle cx="50" cy="40" r="5" fill="#FFB300"/><circle cx="40" cy="70" r="3" fill="#3E2723"/><circle cx="60" cy="70" r="3" fill="#3E2723"/><path d="M45 80 Q50 85 55 80" stroke="#3E2723" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+                },
+                'GLUTEN FREE': {
+                    color: '#FFF3E0', 
+                    svg: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 50 Q15 20 50 20 Q85 20 85 50 L85 85 Q85 95 75 95 L25 95 Q15 95 15 85 Z" fill="#D7CCC8"/><path d="M15 50 Q15 20 50 20 Q85 20 85 50" stroke="#8D6E63" stroke-width="5" fill="none"/><path d="M25 50 Q25 35 50 35 Q75 35 75 50" stroke="#A1887F" stroke-width="2" fill="none"/><circle cx="35" cy="65" r="3" fill="#3E2723"/><path d="M60 65 L70 65" stroke="#3E2723" stroke-width="2" stroke-linecap="round"/><path d="M45 75 Q50 85 55 75" stroke="#3E2723" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+                },
+                'SUGAR FREE': {
+                    color: '#FCE4EC', 
+                    svg: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 30 Q50 10 80 30 Q90 50 50 95 Q10 50 20 30 Z" fill="#F48FB1"/><path d="M20 30 L35 20 L50 30 L65 20 L80 30" stroke="#4CAF50" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="30" cy="50" r="1" fill="#FFFFFF"/><circle cx="70" cy="50" r="1" fill="#FFFFFF"/><circle cx="50" cy="70" r="1" fill="#FFFFFF"/><circle cx="40" cy="55" r="3" fill="#3E2723"/><circle cx="60" cy="55" r="3" fill="#3E2723"/><circle cx="38" cy="60" r="2" fill="#F06292" opacity="0.6"/><circle cx="62" cy="60" r="2" fill="#F06292" opacity="0.6"/><path d="M48 62 Q50 65 52 62" stroke="#3E2723" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+                },
+                'SAUDÁVEL': {
+                    color: '#E8F5E9', 
+                    svg: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="40" r="25" fill="#81C784"/><circle cx="30" cy="50" r="15" fill="#81C784"/><circle cx="70" cy="50" r="15" fill="#81C784"/><circle cx="50" cy="25" r="15" fill="#81C784"/><path d="M40 60 L40 85 Q40 95 50 95 Q60 95 60 85 L60 60" fill="#A5D6A7"/><circle cx="45" cy="80" r="2" fill="#1B5E20"/><circle cx="55" cy="80" r="2" fill="#1B5E20"/><path d="M48 88 Q50 90 52 88" stroke="#1B5E20" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+                }
+            };
+
+            const lactoseRecipes = [
+                { 
+                    title: "Strogonoff Cremoso (Sem Creme de Leite)", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["500g Peito de frango em cubos", "2 Inhames médios cozidos", "1 xícara de molho de tomate", "1 colher de mostarda", "Champignon a gosto", "Alho e cebola picados"], 
+                    instructions: ["Tempere o frango a gosto. Refogue com cebola e alho em uma panela até dourar bem (aprox. 10 a 15 min).", "Enquanto o frango cozinha, bata o inhame cozido no liquidificador com um pouco da água do cozimento (vá colocando aos poucos) até virar um creme branco e liso.", "Adicione o creme de inhame ao frango já cozido.", "Misture o molho de tomate e a mostarda. Deixe apurar em fogo baixo por mais 5 minutos.", "Finalize com o champignon e sirva."] 
+                },
+                { 
+                    title: "Mousse de Chocolate com Abacate", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["1 Abacate maduro grande", "3 colheres de sopa de Cacau em pó 100%", "3 colheres de sopa de Mel ou açúcar", "Gotas de essência de baunilha"], 
+                    instructions: ["Corte o abacate e retire a polpa.", "Coloque todos os ingredientes no liquidificador ou processador.", "Bata por cerca de 3 a 5 minutos, parando para raspar as laterais, até obter um creme totalmente liso e homogêneo.", "Coloque em taças e leve à geladeira por no mínimo 2 horas antes de servir para firmar."] 
+                },
+                { 
+                    title: "Pão de Queijo Fake (Batata)", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["2 Batatas médias cozidas e amassadas (purê)", "2 xícaras de Polvilho Azedo", "1/2 xícara de Polvilho Doce", "1/4 xícara de Azeite de oliva", "Sal a gosto", "Água morna (se necessário para dar ponto)"], 
+                    instructions: ["Pré-aqueça o forno a 200°C.", "Em uma tigela, misture as batatas ainda mornas com o azeite e o sal.", "Adicione os polvilhos aos poucos, amassando com as mãos.", "Sove a massa até que ela desgrude das mãos e fique modelável (se ficar muito seca, coloque colheres de água morna).", "Faça bolinhas pequenas e coloque em uma forma untada.", "Asse por cerca de 25 a 30 minutos ou até ficarem dourados e crocantes por fora."] 
+                },
+                { 
+                    title: "Bolo de Cenoura com Calda Durinha", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["3 Cenouras médias picadas", "3 Ovos", "1 xícara de Óleo", "2 xícaras de Farinha de Trigo", "1 e 1/2 xícara de Açúcar", "1 colher de sopa de Fermento", "Calda: 4 colheres açúcar, 2 colheres cacau, 2 colheres água"], 
+                    instructions: ["Pré-aqueça o forno a 180°C e unte uma forma com óleo e farinha.", "No liquidificador, bata a cenoura, os ovos e o óleo por 3 minutos.", "Em uma tigela, misture a farinha e o açúcar. Despeje o líquido e misture bem. Por último, o fermento.", "Despeje na forma e asse por aproximadamente 40 minutos (faça o teste do palito: se sair limpo, está pronto).", "Para a calda: Misture açúcar, cacau e água em uma panela pequena. Leve ao fogo médio e deixe ferver até engrossar levemente. Despeje sobre o bolo ainda quente."] 
+                },
+                { 
+                    title: "Risoto de Abóbora com Coco", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["1 xícara de Arroz Arbóreo (ou comum)", "2 xícaras de Abóbora Cabotiá em cubos pequenos", "200ml de Leite de Coco", "1 cebola picada", "Caldo de legumes (caseiro ou dissolvido)"], 
+                    instructions: ["Em uma panela, refogue a cebola e a abóbora no azeite até a abóbora começar a amolecer.", "Adicione o arroz e refogue por 2 minutos.", "Vá adicionando o caldo de legumes quente, uma concha por vez, mexendo sempre até o líquido secar antes de por mais.", "Repita o processo por cerca de 15 a 20 minutos até o arroz estar 'al dente'.", "Desligue o fogo, adicione o leite de coco, misture bem para ficar cremoso e tampe a panela por 5 minutos antes de servir."] 
+                },
+                { 
+                    title: "Panqueca de Banana (Só 2 ingredientes)", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["1 Banana bem madura", "2 Ovos", "Canela a gosto (opcional)", "Fio de óleo ou azeite para untar"], 
+                    instructions: ["Em um prato fundo, amasse bem a banana com um garfo até virar uma papinha.", "Adicione os ovos e a canela e bata com o garfo até misturar bem.", "Aqueça uma frigideira antiaderente em fogo baixo e unte levemente.", "Despeje pequenas porções da massa para fazer discos pequenos.", "Deixe dourar por cerca de 2 minutos de cada lado (vire com cuidado). Sirva com frutas."] 
+                },
+                { 
+                    title: "Chocolate Quente Cremoso (Aveia)", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["2 xícaras de Leite de Aveia (ou outro vegetal)", "2 colheres de sopa de Cacau em pó", "1 colher de chá de Amido de Milho", "Açúcar ou adoçante a gosto", "Canela em pau"], 
+                    instructions: ["Dissolva o amido de milho e o cacau em um pouco do leite frio para não empelotar.", "Coloque o restante do leite, a mistura dissolvida, o açúcar e a canela em uma panela.", "Leve ao fogo médio, mexendo sem parar com uma colher ou batedor de arame.", "Assim que ferver, abaixe o fogo e continue mexendo por mais 3 minutos até engrossar. Sirva quente."] 
+                },
+                { 
+                    title: "Escondidinho de Frango (Mandioca)", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["500g de Mandioca cozida", "500g de Frango desfiado e temperado (com molho)", "Azeite de oliva", "Cheiro verde a gosto"], 
+                    instructions: ["Pré-aqueça o forno a 200°C.", "Amasse a mandioca quente com um garfo ou espremedor. Misture com um fio generoso de azeite e um pouco da água do cozimento para fazer um purê rústico.", "Em um refratário, faça uma camada com metade do purê.", "Coloque todo o recheio de frango refogado no meio.", "Cubra com o restante do purê e alise com uma colher.", "Leve ao forno por 20 a 25 minutos apenas para gratinar e aquecer bem."] 
+                },
+                { 
+                    title: "Danoninho de Inhame com Morango", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["2 Inhames médios cozidos (sem casca)", "1 caixa de Morangos lavados (retire as folhas)", "4 colheres de sopa de Açúcar ou Mel", "Suco de meio limão (opcional)"], 
+                    instructions: ["Cozinhe o inhame até ficar bem macio e deixe esfriar completamente.", "No liquidificador, coloque os morangos, o inhame frio e o açúcar.", "Bata bem até obter uma consistência cremosa e uniforme (se precisar, use a função 'pulsar' para ajudar).", "Distribua em potinhos e leve à geladeira por 4 horas. A textura fica idêntica à do iogurte industrializado!"] 
+                },
+                { 
+                    title: "Molho Branco de Couve-Flor", 
+                    tag: "LACTOSE FREE", 
+                    ingredients: ["1/2 Couve-flor média cozida (bem macia)", "1 dente de alho refogado no azeite", "Sal, pimenta e noz moscada a gosto", "Água do cozimento (se necessário)"], 
+                    instructions: ["Cozinhe a couve-flor em água fervente até que o garfo entre com facilidade.", "Escorra, mas reserve um pouco da água.", "No liquidificador, bata a couve-flor com o alho refogado, sal e noz moscada.", "Adicione a água do cozimento aos pouquinhos, batendo até atingir a textura de creme de leite.", "Use sobre massas ou gratinados."] 
+                }
+            ];
+
+            const glutenRecipes = [
+                { 
+                    title: "Coxinha de Batata Doce (Assada)", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["2 Batatas doces grandes cozidas e amassadas", "1 xícara de Frango desfiado temperado", "Farinha de milho ou de linhaça (para empanar)", "1 colher de azeite na massa"], 
+                    instructions: ["Pré-aqueça o forno a 200°C.", "Tempere a batata doce amassada com sal e azeite. Misture bem até formar uma massa modelável.", "Pegue uma porção da massa, abra na palma da mão, coloque o recheio de frango e feche no formato de coxinha.", "Passe as coxinhas na farinha de milho ou linhaça para empanar.", "Coloque em uma assadeira untada e asse por 25 a 30 minutos, virando na metade do tempo, até dourarem."] 
+                },
+                { 
+                    title: "Pizza de Frigideira (Crepioca)", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["1 Ovo", "2 colheres de sopa de goma de Tapioca", "Sal e orégano a gosto", "Recheio: Queijo, Tomate, Manjericão"], 
+                    instructions: ["Em uma tigela pequena, bata bem o ovo, a tapioca e o sal com um garfo.", "Aqueça uma frigideira antiaderente em fogo baixo e despeje a mistura.", "Deixe firmar e dourar de um lado, depois vire o disco.", "Com o fogo bem baixo, coloque o queijo, tomate e orégano sobre o disco.", "Tampe a frigideira por 2 minutos para o queijo derreter. Sirva em seguida."] 
+                },
+                { 
+                    title: "Bolo de Fubá Cremoso", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["3 Ovos", "2 xícaras de Leite", "1 xícara de Fubá mimoso", "1 xícara de Açúcar", "50g de Queijo Ralado", "1/2 xícara de Óleo", "1 colher de fermento"], 
+                    instructions: ["Pré-aqueça o forno a 180°C e unte uma forma com manteiga e fubá.", "Coloque todos os ingredientes no liquidificador, exceto o fermento.", "Bata por 3 minutos até ficar homogêneo (a massa fica bem líquida mesmo, é normal).", "Adicione o fermento e bata rapidinho só para misturar.", "Despeje na forma e asse por 40 a 50 minutos até a superfície dourar bem."] 
+                },
+                { 
+                    title: "Torta de Frango (Massa de Arroz)", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["2 xícaras de Arroz cozido (sobra de almoço)", "3 ovos", "1/2 xícara de óleo", "1 xícara de Leite ou Água", "1 colher de fermento", "Recheio de frango refogado"], 
+                    instructions: ["Pré-aqueça o forno a 180°C.", "No liquidificador, bata o arroz, os ovos, o óleo e o leite até formar uma massa cremosa.", "Misture o fermento com uma colher.", "Em uma forma untada, despeje metade da massa.", "Espalhe o recheio de frango por cima e cubra com o restante da massa.", "Asse por 35 a 40 minutos até dourar."] 
+                },
+                { 
+                    title: "Nhoque de Batata Doce", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["2 Batatas doces assadas (ficam mais secas que cozidas)", "Amido de Milho (Maizena) ou Farinha de Arroz", "Sal a gosto", "Molho de sua preferência"], 
+                    instructions: ["Descasque e amasse as batatas assadas até virar um purê liso.", "Vá adicionando o amido de milho aos poucos e amassando com as mãos.", "O ponto é quando a massa não gruda mais nas mãos.", "Faça rolinhos em uma bancada enfarinhada (com amido) e corte os nhoques.", "Cozinhe em água fervente com sal: quando subirem à superfície, estão prontos. Retire e coloque no molho."] 
+                },
+                { 
+                    title: "Pão de Queijo de Frigideira", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["1 Ovo", "2 colheres de sopa de Tapioca", "1 colher de sopa de Requeijão ou queijo cottage", "1 pitada de sal", "Queijo parmesão ralado a gosto"], 
+                    instructions: ["Em uma tigela, misture todos os ingredientes com um garfo até ficar uniforme.", "Aqueça uma frigideira pequena antiaderente untada com um pouquinho de azeite.", "Despeje a massa e deixe cozinhar em fogo baixo.", "Quando a parte de baixo estiver dourada e firme, vire e doure o outro lado.", "Coma quentinho."] 
+                },
+                { 
+                    title: "Brownie de Feijão Preto (Surpreendente!)", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["1 e 1/2 xícara de Feijão preto cozido (sem tempero e escorrido)", "3 Ovos", "1/2 xícara de Cacau em pó", "1 xícara de Açúcar", "3 colheres de Óleo de coco ou manteiga", "1 colher de fermento"], 
+                    instructions: ["Pré-aqueça o forno a 180°C.", "Coloque o feijão, os ovos e o óleo no liquidificador e bata muito bem até não sobrar nenhuma casca de feijão.", "Adicione o açúcar e o cacau e bata novamente.", "Por último, misture o fermento.", "Asse em forma untada com cacau por 20 a 25 minutos. O interior deve ficar úmido, não deixe secar demais!"] 
+                },
+                { 
+                    title: "Biscoito de Polvilho e Queijo", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["2 xícaras de Polvilho Azedo", "1 Ovo", "1 xícara de Queijo Ralado", "1/2 xícara de Água fervendo com 1/4 xícara de Óleo (para escaldar)", "Sal a gosto"], 
+                    instructions: ["Pré-aqueça o forno a 180°C.", "Coloque o polvilho em uma tigela. Jogue a mistura de água e óleo fervendo por cima para escaldar. Misture com uma colher.", "Espere esfriar um pouco, adicione o ovo e o queijo.", "Sove bem com as mãos até a massa ficar lisa.", "Faça formatos de ferradura ou palitinhos.", "Asse por 15 a 20 minutos até ficarem bem secos e crocantes."] 
+                },
+                { 
+                    title: "Lasanha de Berinjela", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["2 Berinjelas grandes fatiadas no sentido do comprimento", "500g de Carne moída ao molho (Bolonhesa)", "300g de Queijo Mussarela", "Queijo ralado para polvilhar"], 
+                    instructions: ["Grelhe as fatias de berinjela em uma frigideira antiaderente (sem óleo ou com muito pouco) para elas murcharem e secarem um pouco.", "Pré-aqueça o forno a 200°C.", "Em um refratário, monte camadas: Molho, Fatias de Berinjela, Queijo, Molho...", "Termine com queijo e queijo ralado.", "Asse por 25 a 30 minutos até o queijo gratinar e o molho borbulhar."] 
+                },
+                { 
+                    title: "Empadão de Grão de Bico", 
+                    tag: "GLUTEN FREE", 
+                    ingredients: ["Massa: 2 xícaras de Grão de bico cozido e processado + 2 colheres de azeite + Sal", "Recheio: Frango desfiado com palmito (bem cremoso)"], 
+                    instructions: ["Para a massa: processe o grão de bico até virar uma pasta. Misture o azeite e sal. Se precisar, coloque farinha de arroz para dar ponto de modelar.", "Forre o fundo e as laterais de uma forma (fundo removível é melhor) com metade da massa.", "Coloque o recheio.", "Abra o restante da massa na mão e vá cobrindo o empadão.", "Pincele uma gema por cima e asse em forno médio (180°C) por 35 minutos ou até dourar."] 
+                }
+            ];
+
+            const sugarRecipes = [
+                { 
+                    title: "Brigadeiro de Colher Fit", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["2 Bananas nanicas bem maduras", "2 colheres de sopa de Cacau em pó 100%", "2 colheres de sopa de Leite em pó desnatado"], 
+                    instructions: ["Descasque as bananas e leve ao microondas em uma tigela por 1 minuto para amolecer.", "Retire e amasse bem com um garfo (ou use um mixer).", "Adicione o cacau e o leite em pó e misture vigorosamente até ficar um creme marrom escuro e brilhante.", "Leve para gelar por 30 minutos. A textura fica surpreendente!"] 
+                },
+                { 
+                    title: "Beijinho de Batata Doce", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["1 xícara de Batata doce cozida e amassada (bem seca)", "1/2 xícara de Coco ralado seco (sem açúcar)", "Adoçante culinário (opcional, se a batata não for doce o suficiente)", "Cravos para decorar"], 
+                    instructions: ["Em uma tigela, misture a batata doce amassada com metade do coco ralado.", "Misture bem com as mãos até formar uma massinha firme.", "Faça bolinhas com as mãos úmidas.", "Passe as bolinhas no restante do coco ralado.", "Decore com um cravo no centro e mantenha na geladeira."] 
+                },
+                { 
+                    title: "Sorvete de Banana (Nice Cream)", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["3 Bananas nanicas picadas em rodelas e congeladas (congele por pelo menos 4h)"], 
+                    instructions: ["Retire as bananas do congelador e deixe em temperatura ambiente por 5 minutos.", "Coloque no processador de alimentos (liquidificador sofre um pouco, mas dá se tiver paciência).", "Bata, parando para mexer, até que a banana vire um creme espesso igual sorvete de massa.", "Sirva imediatamente ou volte ao freezer por 20 minutos."] 
+                },
+                { 
+                    title: "Bolo de Maçã com Canela", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["3 Maçãs (2 picadas com casca, 1 em cubos)", "3 Ovos", "2 xícaras de Farelo de Aveia", "1 colher de Canela em pó", "1/2 xícara de uvas passas (elas que adoçam)", "1 colher de Fermento"], 
+                    instructions: ["Pré-aqueça o forno a 180°C.", "No liquidificador, bata os ovos, as uvas passas e as cascas das 3 maçãs.", "Em uma tigela, misture a aveia, a canela e a maçã picada em cubinhos.", "Junte o líquido na tigela e misture bem. Adicione o fermento.", "Coloque em forma untada e asse por 30 a 35 minutos. O cheiro de canela avisa quando está pronto!"] 
+                },
+                { 
+                    title: "Mousse de Maracujá Fake", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["2 potes de Iogurte Natural Desnatado", "Polpa de 2 Maracujás", "1 pacote de Gelatina incolor sem sabor (dissolvida conforme a embalagem)", "Adoçante a gosto"], 
+                    instructions: ["Bata no liquidificador o iogurte, a polpa do maracujá (pode coar se preferir sem sementes) e o adoçante.", "Com o liquidificador ligado, despeje a gelatina já hidratada e derretida.", "Bata por 1 minuto.", "Distribua em taças e leve à geladeira por 3 horas até firmar bem."] 
+                },
+                { 
+                    title: "Trufas de Tâmaras", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["1 xícara de Tâmaras secas sem caroço", "2 colheres de Cacau em pó", "Castanhas ou nozes trituradas (opcional)", "Água quente (para hidratar)"], 
+                    instructions: ["Deixe as tâmaras de molho em água quente por 10 minutos para amaciar. Escorra bem.", "Processe as tâmaras até virarem uma pasta grudenta.", "Misture o cacau (e as castanhas se quiser) nessa pasta.", "Com as mãos úmidas, enrole as trufas e passe no cacau em pó para finalizar.", "Guarde na geladeira."] 
+                },
+                { 
+                    title: "Doce de Abóbora com Coco", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["500g de Abóbora descascada em cubos", "100g de Coco ralado fresco ou seco (sem açúcar)", "Canela em pau e Cravo", "Adoçante culinário a gosto", "1/2 xícara de água"], 
+                    instructions: ["Coloque a abóbora, a água, a canela e o cravo em uma panela. Tampe e cozinhe em fogo baixo.", "Quando a abóbora estiver desmanchando, amasse levemente com a colher.", "Adicione o adoçante e o coco.", "Mexa em fogo baixo até secar a água e o doce desgrudar do fundo da panela (aprox. 15 min).", "Sirva gelado com queijo branco."] 
+                },
+                { 
+                    title: "Cookies de Aveia e Banana", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["2 Bananas maduras amassadas", "1 xícara de Aveia em flocos grossos", "1 colher de chá de Canela", "Uvas passas ou gotas de chocolate 70% (opcional)"], 
+                    instructions: ["Pré-aqueça o forno a 180°C.", "Misture a banana amassada com a aveia e a canela até formar uma massa grudenta.", "Adicione as passas se quiser.", "Com uma colher, faça montinhos em uma assadeira untada e achate levemente.", "Asse por 15 a 20 minutos até que fiquem douradinhos e firmes."] 
+                },
+                { 
+                    title: "Prestígio Gelado Fit", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["1 xícara de Coco ralado sem açúcar", "2 colheres de Óleo de coco", "2 colheres de Adoçante (Xilitol ou Eritritol)", "100g de Chocolate 70% derretido"], 
+                    instructions: ["Misture o coco, o óleo de coco e o adoçante. Se ficar muito seco, ponha 1 colher de água.", "Pressione essa massa no fundo de forminhas de silicone ou faça barrinhas e coloque no freezer por 20 min.", "Derreta o chocolate.", "Mergulhe as barrinhas geladas no chocolate e coloque sobre papel manteiga.", "Leve à geladeira até o chocolate endurecer."] 
+                },
+                { 
+                    title: "Geleia de Morango Caseira", 
+                    tag: "SUGAR FREE", 
+                    ingredients: ["2 caixas de Morangos picados", "Suco de 1/2 limão", "1 colher de sopa de Semente de Chia (segredo para dar ponto)", "Adoçante a gosto"], 
+                    instructions: ["Coloque os morangos e o limão em uma panela em fogo baixo.", "Deixe cozinhar, mexendo de vez em quando, até os morangos desmancharem e soltarem muita água.", "Quando reduzir e começar a engrossar, adicione a chia e o adoçante.", "Cozinhe por mais 5 minutos. A chia vai hidratar e dar a consistência de gelatina.", "Guarde em pote de vidro na geladeira."] 
+                }
+            ];
+
+            const healthyRecipes = [
+                { 
+                    title: "Hambúrguer Artesanal Econômico", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["500g de Carne moída (acém ou patinho)", "1 xícara de Aveia em flocos finos (para render e dar fibra)", "1 cebola picadinha", "Sal, pimenta e cheiro verde"], 
+                    instructions: ["Em uma tigela, misture a carne, a aveia (hidratada com 2 colheres de água), a cebola e os temperos.", "Misture bem com as mãos até dar liga.", "Modele os hambúrgueres do tamanho desejado (essa receita rende uns 6 grandes).", "Aqueça bem uma frigideira ou grill com um fio de azeite.", "Grelhe por cerca de 4 minutos de cada lado ou até o ponto desejado."] 
+                },
+                { 
+                    title: "Batata Rústica Crocante (Forno)", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["4 Batatas médias com casca bem lavadas", "2 colheres de Azeite", "Alecrim ou Orégano seco", "Sal grosso ou comum", "Páprica (opcional)"], 
+                    instructions: ["Pré-aqueça o forno a 220°C (bem quente).", "Corte as batatas em gomos (formato de canoa), mantendo a casca.", "Em uma tigela, misture as batatas com o azeite e os temperos, garantindo que todas fiquem lambuzadas.", "Espalhe em uma assadeira sem sobrepor uma na outra.", "Asse por 35 a 45 minutos, virando na metade do tempo, até ficarem douradas e crocantes."] 
+                },
+                { 
+                    title: "Arroz Colorido (Nutritivo)", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["2 xícaras de Arroz cozido", "1 Cenoura ralada", "1/2 lata de Ervilha ou Milho", "2 Ovos mexidos", "Cebolinha picada"], 
+                    instructions: ["Em uma frigideira grande, refogue a cenoura ralada com um fio de azeite até murchar.", "Adicione a ervilha/milho e o arroz cozido. Misture bem para aquecer.", "Empurre o arroz para o canto da panela e faça os ovos mexidos no espaço vazio.", "Misture tudo, acerte o sal e finalize com cebolinha fresca. Uma refeição completa!"] 
+                },
+                { 
+                    title: "Sardinha na Pressão (Tipo Atum)", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["1kg de Sardinha limpa (sem cabeça e rabo)", "5 Tomates fatiados", "3 Cebolas fatiadas em rodelas", "1/2 xícara de Vinagre", "1/2 xícara de Azeite", "Sal e Cheiro verde"], 
+                    instructions: ["Na panela de pressão, faça camadas: Cebola, Tomate, Sardinha, Temperos...", "Repita até acabar os ingredientes. Jogue o azeite e o vinagre por cima.", "Tampe a panela e leve ao fogo.", "Assim que pegar pressão (apitar), abaixe o fogo para o mínimo e conte 20 minutos.", "Desligue e deixe a pressão sair sozinha. A espinha da sardinha derrete e fica igual peixe em lata, delicioso!"] 
+                },
+                { 
+                    title: "Chips de Casca de Batata", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["Cascas de batatas (higienizadas e secas)", "Azeite", "Sal e Pimenta do reino"], 
+                    instructions: ["Pré-aqueça o forno a 200°C ou a Airfryer.", "Seque bem as cascas com papel toalha (isso é essencial para crocância).", "Tempere com azeite, sal e pimenta.", "Espalhe na assadeira.", "Asse por 10 a 15 minutos, mexendo de vez em quando, até ficarem crocantes. Snack perfeito e zero desperdício."] 
+                },
+                { 
+                    title: "Macarrão com Brócolis e Alho", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["250g de Macarrão (Integral ou comum)", "1 Brócolis ninja inteiro cozido 'al dente'", "4 dentes de Alho fatiados em lâminas", "Azeite generoso"], 
+                    instructions: ["Cozinhe o macarrão em água e sal.", "Em uma frigideira grande ou wok, aqueça o azeite e doure as lâminas de alho (cuidado para não queimar).", "Adicione os floretes de brócolis cozidos e refogue rapidamente.", "Junte o macarrão escorrido na frigideira e misture bem para pegar o gosto do alho.", "Sirva imediatamente."] 
+                },
+                { 
+                    title: "Fricassê de Frango Saudável", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["500g Frango cozido e desfiado", "1 lata de Milho (com a água)", "1 pote de Requeijão Light ou Creme de Ricota", "Mussarela para gratinar"], 
+                    instructions: ["Pré-aqueça o forno a 200°C.", "No liquidificador, bata o milho (com a água da lata mesmo) e o requeijão light até virar um creme amarelo.", "Em uma panela, misture esse creme com o frango desfiado e aqueça até borbulhar e engrossar.", "Coloque em um refratário, cubra com fatias de mussarela.", "Leve ao forno por 15 minutos para gratinar."] 
+                },
+                { 
+                    title: "Salada de Grão de Bico (Proteica)", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["2 xícaras de Grão de bico cozido (não muito mole)", "1 Tomate picado sem semente", "1/2 Pepino picado em cubos", "1/2 Cebola roxa picadinha", "Suco de Limão, Azeite e Sal"], 
+                    instructions: ["Em uma tigela grande, misture todos os ingredientes sólidos.", "Tempere com bastante limão, azeite, sal e salsinha.", "Deixe na geladeira por 30 minutos antes de servir para apurar o sabor.", "Ótima opção para substituir a carne no jantar."] 
+                },
+                { 
+                    title: "Abobrinha Recheada com Carne", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["2 Abobrinhas grandes", "300g de Carne moída refogada com temperos", "Queijo ralado"], 
+                    instructions: ["Pré-aqueça o forno a 200°C.", "Corte as abobrinhas ao meio no sentido do comprimento.", "Com uma colher, retire o miolo (a parte das sementes) formando uma barca. Pique o miolo e misture na carne.", "Recheie as abobrinhas com a carne.", "Coloque em uma assadeira (cubra com papel alumínio) e asse por 20 minutos. Retire o papel, polvilhe queijo e asse mais 10 min."] 
+                },
+                { 
+                    title: "Creme de Legumes (Jantar Leve)", 
+                    tag: "SAUDÁVEL", 
+                    ingredients: ["1/2 Abóbora, 1 Cenoura, 1 Chuchu", "1 pedaço pequeno de Gengibre", "1 cebola", "Frango desfiado (opcional para colocar por cima)"], 
+                    instructions: ["Descasque e pique grosseiramente os legumes.", "Coloque na panela de pressão, cubra com água e cozinhe por 10 a 15 minutos após pegar pressão.", "Bata tudo no liquidificador (com a água do cozimento) e o pedacinho de gengibre.", "Acerte o sal.", "Sirva o creme quente com um pouco de frango desfiado por cima para adicionar proteína."] 
+                }
+            ];
+
+            function renderCategory(recipes, containerId) {
+                const container = document.getElementById(containerId);
+                
+                recipes.forEach(recipe => {
+                    recipe.id = recipeIdCounter++;
+                    allRecipes.push(recipe);
+                    
+                    const graphics = funGraphics[recipe.tag];
+                    
+                    const card = document.createElement('article');
+                    card.className = 'card-receita';
+                    card.setAttribute('data-name', recipe.title.toLowerCase()); 
+                    
+                    card.innerHTML = `
+                        <div class="receita-gravura" style="background-color: ${graphics.color};">
+                            ${graphics.svg}
+                            <span class="selo">${recipe.tag}</span>
+                        </div>
+                        <div class="card-content">
+                            <h4>${recipe.title}</h4>
+                            <button class="btn-receita" data-id="${recipe.id}">Ver Receita</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            renderCategory(lactoseRecipes, "receitas-lactose");
+            renderCategory(glutenRecipes, "receitas-gluten");
+            renderCategory(sugarRecipes, "receitas-acucar");
+            renderCategory(healthyRecipes, "receitas-saudaveis");
+
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.card-receita');
+                
+                cards.forEach(card => {
+                    if (card.getAttribute('data-name').includes(term)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            const modal = document.getElementById("recipeModal");
+            const closeBtn = document.querySelector(".close-btn");
+
+            function openModal(recipe) {
+                currentRecipe = recipe;
+                document.getElementById('modal-title').textContent = recipe.title;
+                const tagEl = document.getElementById('modal-tag');
+                tagEl.textContent = recipe.tag;
+                
+                let tagColor = '#333';
+                if(recipe.tag.includes('LACTOSE')) tagColor = '#0288D1';
+                if(recipe.tag.includes('GLUTEN')) tagColor = '#F57C00';
+                if(recipe.tag.includes('SUGAR')) tagColor = '#C2185B';
+                if(recipe.tag.includes('SAUDÁVEL')) tagColor = '#388E3C';
+                
+                tagEl.style.backgroundColor = tagColor;
+
+                const ingList = document.getElementById('modal-ingredients');
+                ingList.innerHTML = recipe.ingredients.map(i => `<li>${i}</li>`).join('');
+
+                const instList = document.getElementById('modal-instructions');
+                instList.innerHTML = recipe.instructions.map(i => `<li>${i}</li>`).join('');
+
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            }
+
+            window.shareRecipe = function() {
+                if (!currentRecipe) return;
+                
+                const text = `Confira essa receita de ${currentRecipe.title} do NutriSaúde!\n\nIngredientes:\n${currentRecipe.ingredients.join('\n')}\n\nPreparo:\n${currentRecipe.instructions.join('\n')}`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: currentRecipe.title,
+                        text: text,
+                        url: window.location.href
+                    }).catch(console.error);
+                } else {
+                    alert("Copie e cole este texto:\n\n" + text);
+                }
+            };
+
+            document.body.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-receita')) {
+                    const id = e.target.getAttribute('data-id');
+                    const recipe = allRecipes.find(r => r.id == id);
+                    if(recipe) openModal(recipe);
+                }
+            });
+
+            closeBtn.onclick = () => {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            };
+
+            window.onclick = (e) => {
+                if (e.target == modal) {
+                    modal.style.display = "none";
+                    document.body.style.overflow = "auto";
+                }
+            };
+            
+            window.calcularIMC = function() {
+                const peso = parseFloat(document.getElementById('imc-peso').value);
+                const altura = parseFloat(document.getElementById('imc-altura').value);
+                const idade = parseFloat(document.getElementById('imc-idade').value);
+                const sexo = document.getElementById('imc-sexo').value;
+                const resultadoDiv = document.getElementById('resultado-imc');
+                const valorSpan = document.getElementById('valor-imc');
+                const classSpan = document.getElementById('classificacao-imc');
+                const avisoSus = document.getElementById('aviso-sus');
+
+                if (!peso || !altura || !idade) {
+                    alert("Por favor, preencha todos os dados corretamente.");
+                    return;
+                }
+
+                const imc = peso / (altura * altura);
+                const imcFormatado = imc.toFixed(2);
+                
+                let classificacao = '';
+                let cor = '';
+                let mostrarSus = false;
+
+                if (imc < 18.5) {
+                    classificacao = 'Abaixo do peso';
+                    cor = '#FFB74D'; 
+                } else if (imc < 24.9) {
+                    classificacao = 'Peso normal (Parabéns!)';
+                    cor = '#388E3C'; 
+                } else if (imc < 29.9) {
+                    classificacao = 'Sobrepeso';
+                    cor = '#FFA726'; 
+                    mostrarSus = true; 
+                } else {
+                    classificacao = 'Obesidade (Procure um Nutricionista ou Médico)';
+                    cor = '#D32F2F'; 
+                    mostrarSus = true; 
+                }
+
+                valorSpan.innerText = imcFormatado;
+                classSpan.innerText = classificacao;
+                classSpan.style.color = cor;
+                resultadoDiv.style.display = 'block';
+                
+                if(mostrarSus) {
+                    avisoSus.style.display = 'block';
+                } else {
+                    avisoSus.style.display = 'none';
+                }
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if(target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
